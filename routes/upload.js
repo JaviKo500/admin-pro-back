@@ -1,0 +1,12 @@
+const { Router } = require('express');
+const fileUpload = require('express-fileupload');
+const { validarJWT } = require('../middlewares/validar-jwt');
+const { upolad, retornaImagen } = require('../controllers/upload');
+// const multer = require('multer');
+// const upload = multer({ dest: ' uploads / ' });
+const router = Router();
+router.use(fileUpload());
+router.put('/:tipo/:id', validarJWT, upolad);
+router.get('/:tipo/:foto', validarJWT, retornaImagen);
+// router.post('/:tipo/:id', upload.single('avatar'), upolad);
+module.exports = router;
