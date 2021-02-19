@@ -18,7 +18,6 @@ const actualizarImagen = async(tipo, id, nombreArchivo) => {
             try {
                 medico = await Medico.findById(id);
             } catch (e) {
-                console.log('no existe ese medico');
                 return false;
             }
             pathViejo = `./uploads/medicos/${medico.img}`;

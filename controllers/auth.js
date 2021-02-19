@@ -72,4 +72,15 @@ const googleSingIn = async(req, res = response) => {
     }
 }
 
-module.exports = { login, googleSingIn };
+const renewToken = async(req, res = response) => {
+    const uid = req.uid;
+    // generar token
+    const token = await generarJWT(uid);
+
+    res.status(200).json({
+        ok: true,
+        uid
+    });
+};
+
+module.exports = { login, googleSingIn, renewToken };
