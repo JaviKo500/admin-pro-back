@@ -75,12 +75,21 @@ const googleSingIn = async(req, res = response) => {
 const renewToken = async(req, res = response) => {
     const uid = req.uid;
     // generar token
-    const token = await generarJWT(uid);
+    try {
+        const token = await generarJWT(uid);
+        const usuario = await Usuario.findById(uid);
+        res.status(200).json({
+            ok: true,
+            token,
+            usuario
+        });
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            msg: 'Hable con el admin'
+        });
+    }
 
-    res.status(200).json({
-        ok: true,
-        uid
-    });
-};
+}
 
 module.exports = { login, googleSingIn, renewToken };

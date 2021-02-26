@@ -28,6 +28,8 @@ const UsuarioSchema = Schema({
 
     }
 });
+
+// para mostrar lo que queremos en la busqueda por algub¿n campo
 UsuarioSchema.method('toJSON', function() {
     const { __v, _id, password, ...object } = this.toObject();
     object.uid = _id;

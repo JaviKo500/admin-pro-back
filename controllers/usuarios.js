@@ -80,10 +80,18 @@ const actualizarUsuarios = async(req, res = response) => {
                 });
             }
         }
+
+        if (!usuarioBD.google) {
+            campos.email = email;
+        } else if (usuarioBD.email !== email) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Usuarios de google no puede cambiar su usuario'
+            });
+        }
         // elimina campos de un objeto
         // delete campos.password;
         // delete campos.google;
-        campos.email = email;
         const usuarioActualizado = await Usuario.findByIdAndUpdate(uid, campos, { new: true });
 
         res.json({
