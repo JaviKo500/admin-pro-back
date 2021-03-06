@@ -3,6 +3,7 @@ const { response } = require('express');
 const Usuario = require('../models/usuario');
 const bcrypt = require('bcryptjs');
 const { generarJWT } = require('../helpers/jwt');
+const { getMemuFrontEnd } = require('../helpers/menu-forntend');
 const { googleVerify } = require('../helpers/google-verify');
 
 const login = async(req, res = response) => {
@@ -28,7 +29,8 @@ const login = async(req, res = response) => {
         const token = await generarJWT(usuarioBD.id);
         res.json({
             ok: true,
-            token
+            token,
+            menu: getMemuFrontEnd(usuarioBD.rol)
         });
     } catch (error) {
         console.log(error);
@@ -62,7 +64,8 @@ const googleSingIn = async(req, res = response) => {
         res.status(200).json({
             ok: true,
             msg: 'Google Sing in',
-            token
+            token,
+            menu: getMemuFrontEnd(usuarioBD.rol)
         });
     } catch (e) {
         res.status(401).json({
@@ -81,7 +84,8 @@ const renewToken = async(req, res = response) => {
         res.status(200).json({
             ok: true,
             token,
-            usuario
+            usuario,
+            menu: getMemuFrontEnd(usuario.rol)
         });
     } catch (error) {
         res.status(500).json({
